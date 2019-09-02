@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome User!! We wish you a great journey ahead!!</title>
+      <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1"><link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+<script src='https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js'></script>
+<style>
+/*custom font*/
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
+
+/*basic reset*/
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    height: 100%;
+    background: #6441A5; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #6441A5, #2a0845); /* Chrome 10-25, Safari 5.1-6 */
+}
+
+body {
+    font-family: montserrat, arial, verdana;
+    background: transparent;
+}
+
+/*form styles*/
+#msform {
+    text-align: center;
+    position: relative;
+    margin-top: 30px;
+}
+
+#msform fieldset {
+    background: white;
+    border: 0 none;
+    border-radius: 0px;
+    box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+    padding: 20px 30px;
+    box-sizing: border-box;
+    width: 80%;
+    margin: 0 10%;
+
+    /*stacking fieldsets above each other*/
+    position: relative;
+}
+
+/*Hide all except first fieldset*/
+#msform fieldset:not(:first-of-type) {
+    display: none;
+}
+
+/*inputs*/
+#msform input, #msform textarea {
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 0px;
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: montserrat;
+    color: #2C3E50;
+    font-size: 13px;
+}
+
+#msform input:focus, #msform textarea:focus {
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    border: 1px solid #ee0979;
+    outline-width: 0;
+    transition: All 0.5s ease-in;
+    -webkit-transition: All 0.5s ease-in;
+    -moz-transition: All 0.5s ease-in;
+    -o-transition: All 0.5s ease-in;
+}
+
+/*buttons*/
+#msform .action-button {
+    width: 100px;
+    background: #ee0979;
+    font-weight: bold;
+    color: white;
+    border: 0 none;
+    border-radius: 25px;
+    cursor: pointer;
+    padding: 10px 5px;
+    margin: 10px 5px;
+}
+
+#msform .action-button:hover, #msform .action-button:focus {
+    box-shadow: 0 0 0 2px white, 0 0 0 3px #ee0979;
+}
+
+#msform .action-button-previous {
+    width: 100px;
+    background: #C5C5F1;
+    font-weight: bold;
+    color: white;
+    border: 0 none;
+    border-radius: 25px;
+    cursor: pointer;
+    padding: 10px 5px;
+    margin: 10px 5px;
+}
+
+#msform .action-button-previous:hover, #msform .action-button-previous:focus {
+    box-shadow: 0 0 0 2px white, 0 0 0 3px #C5C5F1;
+}
+
+/*headings*/
+.fs-title {
+    font-size: 18px;
+    text-transform: uppercase;
+    color: #2C3E50;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+.fs-subtitle {
+    font-weight: normal;
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/*progressbar*/
+#progressbar {
+    margin-bottom: 30px;
+    overflow: hidden;
+    /*CSS counters to number the steps*/
+    counter-reset: step;
+}
+
+#progressbar li {
+    list-style-type: none;
+    color: white;
+    text-transform: uppercase;
+    font-size: 9px;
+    width: 33.33%;
+    float: left;
+    position: relative;
+    letter-spacing: 1px;
+}
+
+#progressbar li:before {
+    content: counter(step);
+    counter-increment: step;
+    width: 24px;
+    height: 24px;
+    line-height: 26px;
+    display: block;
+    font-size: 12px;
+    color: #333;
+    background: white;
+    border-radius: 25px;
+    margin: 0 auto 10px auto;
+}
+
+/*progressbar connectors*/
+#progressbar li:after {
+    content: '';
+    width: 100%;
+    height: 2px;
+    background: white;
+    position: absolute;
+    left: -50%;
+    top: 9px;
+    z-index: -1; /*put it behind the numbers*/
+}
+
+#progressbar li:first-child:after {
+    /*connector not needed before the first step*/
+    content: none;
+}
+
+/*marking active/completed steps green*/
+/*The number of the step and the connector before it = green*/
+#progressbar li.active:before, #progressbar li.active:after {
+    background: #ee0979;
+    color: white;
+}
+
+
+/* Not relevant to this form */
+.dme_link {
+    margin-top: 30px;
+    text-align: center;
+}
+.dme_link a {
+    background: #FFF;
+    font-weight: bold;
+    color: #ee0979;
+    border: 0 none;
+    border-radius: 25px;
+    cursor: pointer;
+    padding: 5px 25px;
+    font-size: 12px;
+}
+
+.dme_link a:hover, .dme_link a:focus {
+    background: #C5C5F1;
+    text-decoration: none;
+}
+
+
+
+
+{% comment %} Profile Image {% endcomment %}
+.container {
+  max-width: 960px;
+  margin: 30px auto;
+  padding: 20px;
+}
+.avatar-upload {
+  position: relative;
+  max-width: 205px;
+  margin: 50px auto;
+}
+.avatar-upload .avatar-edit {
+  position: absolute;
+  right: 12px;
+  z-index: 1;
+  top: 10px;
+}
+.avatar-upload .avatar-edit input {
+  display: none;
+}
+.avatar-upload .avatar-edit input + label {
+  display: inline-block;
+  width: 34px;
+  height: 34px;
+  margin-bottom: 0;
+  border-radius: 100%;
+  background: #FFFFFF;
+  border: 1px solid transparent;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  font-weight: normal;
+  transition: all 0.2s ease-in-out;
+}
+.avatar-upload .avatar-edit input + label:hover {
+  background: #f1f1f1;
+  border-color: #d6d6d6;
+}
+.avatar-upload .avatar-edit input + label:after {
+  content: "\f040";
+  font-family: 'FontAwesome';
+  color: #757575;
+  position: absolute;
+  top: 10px;
+  left: 0;
+  right: 10%;
+  text-align: center;
+  margin: auto;
+}
+.avatar-upload .avatar-preview {
+  width: 192px;
+  height: 192px;
+  border-radius: 100%;
+  border: 6px solid #F8F8F8;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+}
+.avatar-upload .avatar-preview > div {
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+
+
+
+
+
+{% comment %} Date Picker {% endcomment %}
+[type="date"] {
+  background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  97% 50% no-repeat ;
+}
+[type="date"]::-webkit-inner-spin-button {
+  display: none;
+}
+[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}
+
+/* custom styles */
+
+label {
+  display: block;
+}
+.input1 {
+  border: 1px solid #c4c4c4;
+  border-radius: 5px;
+  background-color: #fff;
+  padding: 3px 5px;
+  box-shadow: inset 0 3px 6px rgba(0,0,0,0.1);
+  width: 190px;
+}
+</style>
+
+</head>
+<body>
+{% include 'commonPanel/loader.html' %}
+<div class="blur" id="main1111">
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <form id="msform" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+            <!-- progressbar -->
+            <ul id="progressbar">
+                <li class="active">Personal Details</li>
+                <li>Account Setup</li>
+            </ul>
+            <!-- fieldsets -->
+            <fieldset>
+                <h2 class="fs-title">Personal Details</h2>
+                <h3 class="fs-subtitle">Tell us something more about you</h3>
+                <input type="text" name="username" id="username" placeholder="Username" required />
+                <input type="text" name="fname" id="firstname" placeholder="First Name" required/>
+                <input type="text" name="lname" id="lastname" placeholder="Last Name"/>
+                <input type="number" name="phone" placeholder="Phone" required/>
+                <input type="number" name="phone1" placeholder="Alternate Phone"/>
+                <div class="col-sm-13 col-xs-13">
+                    <select name="type" id="type" class="form-control gender" required>
+						<option value="W">Warden</option>
+						<option value="S" selected>Student</option>
+						<option value="P">Parent</option>
+	                </select>
+                </div>
+				<br>
+                <div class="col-sm-13 col-xs-13">
+                    <select name="country" class="form-control countries" id="countries" required>
+		                <option value="" selected="">Country</option>
+	                </select>
+                </div>
+				<br>
+				<input type="text" name="state" placeholder="State" required/>
+				<input type="text" name="city" placeholder="City" required/>
+				<div class="col-sm-13 col-xs-13">
+                    <select name="gender" id="gender" class="form-control gender" required>
+		                <option value="" selected="">Select Gender</option>
+						<option value="M">Male</option>
+						<option value="F">Female</option>
+						<option value="N">Can't Reveal</option>
+	                </select>
+                </div>
+				<br>
+				<input type="date" name="dob" class="input1" id="dateofbirth" required>
+                <input type="button" name="next" class="next action-button" value="Next"/>
+            </fieldset>
+
+            <fieldset>
+                <h2 class="fs-title">Create your account</h2>
+                <h3 class="fs-subtitle">Fill in your credentials</h3>
+                <h3 class="fs-subtitle" id="sub"></h3>
+
+                <div class="avatar-upload" style="margin-left:23%;">
+                    <div class="avatar-edit">
+                        <input type='file' name="file" id="imageUpload" required accept=".png, .jpg, .jpeg" />
+                        <label for="imageUpload"></label>
+                    </div>
+                    <div class="avatar-preview">
+                        <div id="imagePreview" style="background-image: url(https://images.unsplash.com/photo-1553258318-c22356c14808?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60);">
+                        </div>
+                    </div>
+
+            </div>
+                <input type="email" name="email" id="email" placeholder="Email" required/>
+                <input type="password" name="pass" id="pass" minlength="8" placeholder="Password" required/>
+                <input type="password" name="cpass" id="cpass" placeholder="Confirm Password" required/>
+
+                <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
+				<span>
+                <input type="submit" id="subm" name="submit" class="action-button" value="Submit"/>
+                </span>
+            </fieldset>
+
+        </form>
+    </div>
+</div>
+</div>
+<!-- /.MultiStep Form -->
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js'></script>
+
+</body>
+<script>
+
+$(function(){
+  $("#load").hide();
+  $("#main1111").removeClass("blur");
+})
+$("#msform").submit(function(e){
+	e.preventDefault();
+	if($("#pass").val()!==$("#cpass").val()){
+		alert("Passwords Don't match")
+	}
+	else{
+		submit();
+	}
+})
+
+var file;
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            $('#imagePreview').css('background-image', 'url('+e.target.result +')');
+            $('#imagePreview').hide();
+            $('#imagePreview').fadeIn(650);
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+$("#imageUpload").change(function(e) {
+    readURL(this);
+	file=e.target.files[0];
+	var reader = new FileReader();
+    reader.onload = function(event) {
+    file=event.target.result;
+	}
+    $("#sub").text("Nice Picture My Friend!!");
+
+});
+
+</script>
+
+<script>
+
+//jQuery time
+var current_fs, next_fs, previous_fs; //fieldsets
+var left, opacity, scale; //fieldset properties which we will animate
+var animating; //flag to prevent quick multi-click glitches
+
+$(".next").click(function(){
+	if(animating) return false;
+	animating = true;
+
+	current_fs = $(this).parent();
+	next_fs = $(this).parent().next();
+
+	//activate next step on progressbar using the index of next_fs
+	$("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+	//show the next fieldset
+	next_fs.show();
+	//hide the current fieldset with style
+	current_fs.animate({opacity: 0}, {
+		step: function(now, mx) {
+			//as the opacity of current_fs reduces to 0 - stored in "now"
+			//1. scale current_fs down to 80%
+			scale = 1 - (1 - now) * 0.2;
+			//2. bring next_fs from the right(50%)
+			left = (now * 50)+"%";
+			//3. increase opacity of next_fs to 1 as it moves in
+			opacity = 1 - now;
+			current_fs.css({
+        'transform': 'scale('+scale+')',
+        'position': 'absolute'
+      });
+			next_fs.css({'left': left, 'opacity': opacity});
+		},
+		duration: 800,
+		complete: function(){
+			current_fs.hide();
+			animating = false;
+		},
+		//this comes from the custom easing plugin
+		easing: 'easeInOutBack'
+	});
+});
+
+$(".previous").click(function(){
+	if(animating) return false;
+	animating = true;
+
+	current_fs = $(this).parent();
+	previous_fs = $(this).parent().prev();
+
+	//de-activate current step on progressbar
+	$("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+
+	//show the previous fieldset
+	previous_fs.show();
+	//hide the current fieldset with style
+	current_fs.animate({opacity: 0}, {
+		step: function(now, mx) {
+			//as the opacity of current_fs reduces to 0 - stored in "now"
+			//1. scale previous_fs from 80% to 100%
+			scale = 0.8 + (1 - now) * 0.2;
+			//2. take current_fs to the right(50%) - from 0%
+			left = ((1-now) * 50)+"%";
+			//3. increase opacity of previous_fs to 1 as it moves in
+			opacity = 1 - now;
+			current_fs.css({'left': left});
+			previous_fs.css({'transform': 'scale('+scale+')', 'opacity': opacity});
+		},
+		duration: 800,
+		complete: function(){
+			current_fs.hide();
+			animating = false;
+		},
+		//this comes from the custom easing plugin
+		easing: 'easeInOutBack'
+	});
+});
+
+$(".submit").click(function(){
+	return false;
+})
+</script>
+
+<script>
+function countriesDropdown(container){
+	var countries = {
+		AFG: "Afghanistan",
+		ALB: "Albania",
+		ALG: "Algeria",
+		AND: "Andorra",
+		ANG: "Angola",
+		ANT: "Antigua and Barbuda",
+		ARG: "Argentina",
+		ARM: "Armenia",
+		ARU: "Aruba",
+		ASA: "American Samoa",
+		AUS: "Australia",
+		AUT: "Austria",
+		AZE: "Azerbaijan",
+		BAH: "Bahamas",
+		BAN: "Bangladesh",
+		BAR: "Barbados",
+		BDI: "Burundi",
+		BEL: "Belgium",
+		BEN: "Benin",
+		BER: "Bermuda",
+		BHU: "Bhutan",
+		BIH: "Bosnia and Herzegovina",
+		BIZ: "Belize",
+		BLR: "Belarus",
+		BOL: "Bolivia",
+		BOT: "Botswana",
+		BRA: "Brazil",
+		BRN: "Bahrain",
+		BRU: "Brunei",
+		BUL: "Bulgaria",
+		BUR: "Burkina Faso",
+		CAF: "Central African Republic",
+		CAM: "Cambodia",
+		CAN: "Canada",
+		CAY: "Cayman Islands",
+		CGO: "Congo",
+		CHA: "Chad",
+		CHI: "Chile",
+		CHN: "China",
+		CIV: "Cote d'Ivoire",
+		CMR: "Cameroon",
+		COD: "DR Congo",
+		COK: "Cook Islands",
+		COL: "Colombia",
+		COM: "Comoros",
+		CPV: "Cape Verde",
+		CRC: "Costa Rica",
+		CRO: "Croatia",
+		CUB: "Cuba",
+		CYP: "Cyprus",
+		CZE: "Czech Republic",
+		DEN: "Denmark",
+		DJI: "Djibouti",
+		DMA: "Dominica",
+		DOM: "Dominican Republic",
+		ECU: "Ecuador",
+		EGY: "Egypt",
+		ERI: "Eritrea",
+		ESA: "El Salvador",
+		ESP: "Spain",
+		EST: "Estonia",
+		ETH: "Ethiopia",
+		FIJ: "Fiji",
+		FIN: "Finland",
+		FRA: "France",
+		FSM: "Micronesia",
+		GAB: "Gabon",
+		GAM: "Gambia",
+		GBR: "Great Britain",
+		GBS: "Guinea-Bissau",
+		GEO: "Georgia",
+		GEQ: "Equatorial Guinea",
+		GER: "Germany",
+		GHA: "Ghana",
+		GRE: "Greece",
+		GRN: "Grenada",
+		GUA: "Guatemala",
+		GUI: "Guinea",
+		GUM: "Guam",
+		GUY: "Guyana",
+		HAI: "Haiti",
+		HKG: "Hong Kong",
+		HON: "Honduras",
+		HUN: "Hungary",
+		INA: "Indonesia",
+		IND: "India",
+		IRI: "Iran",
+		IRL: "Ireland",
+		IRQ: "Iraq",
+		ISL: "Iceland",
+		ISR: "Israel",
+		ISV: "Virgin Islands",
+		ITA: "Italy",
+		IVB: "British Virgin Islands",
+		JAM: "Jamaica",
+		JOR: "Jordan",
+		JPN: "Japan",
+		KAZ: "Kazakhstan",
+		KEN: "Kenya",
+		KGZ: "Kyrgyzstan",
+		KIR: "Kiribati",
+		KOR: "South Korea",
+		KOS: "Kosovo",
+		KSA: "Saudi Arabia",
+		KUW: "Kuwait",
+		LAO: "Laos",
+		LAT: "Latvia",
+		LBA: "Libya",
+		LBR: "Liberia",
+		LCA: "Saint Lucia",
+		LES: "Lesotho",
+		LIB: "Lebanon",
+		LIE: "Liechtenstein",
+		LTU: "Lithuania",
+		LUX: "Luxembourg",
+		MAD: "Madagascar",
+		MAR: "Morocco",
+		MAS: "Malaysia",
+		MAW: "Malawi",
+		MDA: "Moldova",
+		MDV: "Maldives",
+		MEX: "Mexico",
+		MGL: "Mongolia",
+		MHL: "Marshall Islands",
+		MKD: "Macedonia",
+		MLI: "Mali",
+		MLT: "Malta",
+		MNE: "Montenegro",
+		MON: "Monaco",
+		MOZ: "Mozambique",
+		MRI: "Mauritius",
+		MTN: "Mauritania",
+		MYA: "Myanmar",
+		NAM: "Namibia",
+		NCA: "Nicaragua",
+		NED: "Netherlands",
+		NEP: "Nepal",
+		NGR: "Nigeria",
+		NIG: "Niger",
+		NOR: "Norway",
+		NRU: "Nauru",
+		NZL: "New Zealand",
+		OMA: "Oman",
+		PAK: "Pakistan",
+		PAN: "Panama",
+		PAR: "Paraguay",
+		PER: "Peru",
+		PHI: "Philippines",
+		PLE: "Palestine",
+		PLW: "Palau",
+		PNG: "Papua New Guinea",
+		POL: "Poland",
+		POR: "Portugal",
+		PRK: "North Korea",
+		PUR: "Puerto Rico",
+		QAT: "Qatar",
+		ROU: "Romania",
+		RSA: "South Africa",
+		RUS: "Russia",
+		RWA: "Rwanda",
+		SAM: "Samoa",
+		SEN: "Senegal",
+		SEY: "Seychelles",
+		SIN: "Singapore",
+		SKN: "Saint Kitts and Nevis",
+		SLE: "Sierra Leone",
+		SLO: "Slovenia",
+		SMR: "San Marino",
+		SOL: "Solomon Islands",
+		SOM: "Somalia",
+		SRB: "Serbia",
+		SRI: "Sri Lanka",
+		SSD: "South Sudan",
+		STP: "Sao Tome and Principe",
+		SUD: "Sudan",
+		SUI: "Switzerland",
+		SUR: "Suriname",
+		SVK: "Slovakia",
+		SWE: "Sweden",
+		SWZ: "Swaziland",
+		SYR: "Syria",
+		TAN: "Tanzania",
+		TGA: "Tonga",
+		THA: "Thailand",
+		TJK: "Tajikistan",
+		TKM: "Turkmenistan",
+		TLS: "Timor-Leste",
+		TOG: "Togo",
+		TPE: "Chinese Taipei",
+		TTO: "Trinidad and Tobago",
+		TUN: "Tunisia",
+		TUR: "Turkey",
+		TUV: "Tuvalu",
+		UAE: "United Arab Emirates",
+		UGA: "Uganda",
+		UKR: "Ukraine",
+		URU: "Uruguay",
+		USA: "United States",
+		UZB: "Uzbekistan",
+		VAN: "Vanuatu",
+		VEN: "Venezuela",
+		VIE: "Vietnam",
+		VIN: "Saint Vincent and the Grenadines",
+		YEM: "Yemen",
+		ZAM: "Zambia",
+		ZAN: "Zanzibar",
+		ZIM: "Zimbabwe"
+		}
+	var out = "<select><option rel=''>Country</option>";
+	for (var key in countries) {
+		out += "<option rel='" + key + "'>" + countries[key] + "</option>";
+	}
+	out += "</select>";
+
+	document.getElementById(container).innerHTML = out;
+}
+countriesDropdown("countries");
+
+</script>
+
+<script>
+function submit(){
+
+  $("#load").show();
+  $("#main1111").attr("class","blur");
+		var fd = new FormData();
+		fd.append("file", file);
+		fd.append("user", "{{csrf_token}}");
+
+		console.log(file)
+    $("input").each(function(){
+        console.log($(this).val());
+		fd.append($(this).attr('name'), $(this).val());
+    })
+	console.log(fd);
+	fd.append('gender', $("#gender").val());
+	fd.append('country', $("#countries").val());
+    fd.append("type", $("#type").val());
+
+
+	$.ajax({
+              type: "POST",
+              url: "http://127.0.0.1:8000/user/createUser/",
+              data: fd,
+              processData: false,
+              contentType: false
+            }).done(function(data) {
+				if(data.status==="500"){
+					alert("Some Error Occured!! Please Try Again!!")
+                    $('#msform').bind('submit');
+                    $("#load").hide();
+                    $("#main1111").removeClass("blur");
+				}
+				else if(data.status==="404"){
+					alert("Username Already Exists!! Try Another One!!")
+                    $('#msform').bind('submit');
+                    $("#load").hide();
+                    $("#main1111").removeClass("blur");
+				}
+				else if(data.status==="200"){
+					window.location.href="/user/mainPage";
+                }
+                else{
+                    $('#msform').bind('submit');
+                    $("#load").hide();
+                    $("#main1111").removeClass("blur");
+                }
+	})
+}
+
+
+
+
+</script>
+
+
+<script>
+/*!
+ * Modified
+ * Signature Pad v1.5.3
+ * https://github.com/szimek/signature_pad
+ *
+ * Copyright 2016 Szymon Nowak
+ * Released under the MIT license
+ */
+var SignaturePad = (function(document) {
+    "use strict";
+
+    var log = console.log.bind(console);
+
+    var SignaturePad = function(canvas, options) {
+        var self = this,
+            opts = options || {};
+
+        this.velocityFilterWeight = opts.velocityFilterWeight || 0.7;
+        this.minWidth = opts.minWidth || 0.5;
+        this.maxWidth = opts.maxWidth || 2.5;
+        this.dotSize = opts.dotSize || function() {
+                return (self.minWidth + self.maxWidth) / 2;
+            };
+        this.penColor = opts.penColor || "black";
+        this.backgroundColor = opts.backgroundColor || "rgba(0,0,0,0)";
+        this.throttle = opts.throttle || 0;
+        this.throttleOptions = {
+            leading: true,
+            trailing: true
+        };
+        this.minPointDistance = opts.minPointDistance || 0;
+        this.onEnd = opts.onEnd;
+        this.onBegin = opts.onBegin;
+
+        this._canvas = canvas;
+        this._ctx = canvas.getContext("2d");
+        this._ctx.lineCap = 'round';
+        this.clear();
+
+        // we need add these inline so they are available to unbind while still having
+        //  access to 'self' we could use _.bind but it's not worth adding a dependency
+        this._handleMouseDown = function(event) {
+            if (event.which === 1) {
+                self._mouseButtonDown = true;
+                self._strokeBegin(event);
+            }
+        };
+
+        var _handleMouseMove = function(event) {
+           event.preventDefault();
+            if (self._mouseButtonDown) {
+                self._strokeUpdate(event);
+                if (self.arePointsDisplayed) {
+                    var point = self._createPoint(event);
+                    self._drawMark(point.x, point.y, 5);
+                }
+            }
+        };
+
+        this._handleMouseMove = _.throttle(_handleMouseMove, self.throttle, self.throttleOptions);
+        //this._handleMouseMove = _handleMouseMove;
+
+        this._handleMouseUp = function(event) {
+            if (event.which === 1 && self._mouseButtonDown) {
+                self._mouseButtonDown = false;
+                self._strokeEnd(event);
+            }
+        };
+
+        this._handleTouchStart = function(event) {
+            if (event.targetTouches.length == 1) {
+                var touch = event.changedTouches[0];
+                self._strokeBegin(touch);
+            }
+        };
+
+        var _handleTouchMove = function(event) {
+            // Prevent scrolling.
+            event.preventDefault();
+
+            var touch = event.targetTouches[0];
+            self._strokeUpdate(touch);
+            if (self.arePointsDisplayed) {
+                var point = self._createPoint(touch);
+                self._drawMark(point.x, point.y, 5);
+            }
+        };
+        this._handleTouchMove = _.throttle(_handleTouchMove, self.throttle, self.throttleOptions);
+        //this._handleTouchMove = _handleTouchMove;
+
+        this._handleTouchEnd = function(event) {
+            var wasCanvasTouched = event.target === self._canvas;
+            if (wasCanvasTouched) {
+                event.preventDefault();
+                self._strokeEnd(event);
+            }
+        };
+
+        this._handleMouseEvents();
+        this._handleTouchEvents();
+    };
+
+    SignaturePad.prototype.clear = function() {
+        var ctx = this._ctx,
+            canvas = this._canvas;
+
+        ctx.fillStyle = this.backgroundColor;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        this._reset();
+    };
+
+    SignaturePad.prototype.showPointsToggle = function() {
+        this.arePointsDisplayed = !this.arePointsDisplayed;
+    };
+
+    SignaturePad.prototype.toDataURL = function(imageType, quality) {
+        var canvas = this._canvas;
+        return canvas.toDataURL.apply(canvas, arguments);
+    };
+
+    SignaturePad.prototype.fromDataURL = function(dataUrl) {
+        var self = this,
+            image = new Image(),
+            ratio = window.devicePixelRatio || 1,
+            width = this._canvas.width / ratio,
+            height = this._canvas.height / ratio;
+
+        this._reset();
+        image.src = dataUrl;
+        image.onload = function() {
+            self._ctx.drawImage(image, 0, 0, width, height);
+        };
+        this._isEmpty = false;
+    };
+
+    SignaturePad.prototype._strokeUpdate = function(event) {
+        var point = this._createPoint(event);
+        if(this._isPointToBeUsed(point)){
+            this._addPoint(point);
+        }
+    };
+
+    var pointsSkippedFromBeingAdded = 0;
+    SignaturePad.prototype._isPointToBeUsed = function(point) {
+        // Simplifying, De-noise
+        if(!this.minPointDistance)
+            return true;
+
+        var points = this.points;
+        if(points && points.length){
+            var lastPoint = points[points.length-1];
+            if(point.distanceTo(lastPoint) < this.minPointDistance){
+                // log(++pointsSkippedFromBeingAdded);
+                return false;
+            }
+        }
+        return true;
+    };
+
+    SignaturePad.prototype._strokeBegin = function(event) {
+        this._reset();
+        this._strokeUpdate(event);
+        if (typeof this.onBegin === 'function') {
+            this.onBegin(event);
+        }
+    };
+
+    SignaturePad.prototype._strokeDraw = function(point) {
+        var ctx = this._ctx,
+            dotSize = typeof(this.dotSize) === 'function' ? this.dotSize() : this.dotSize;
+
+        ctx.beginPath();
+        this._drawPoint(point.x, point.y, dotSize);
+        ctx.closePath();
+        ctx.fill();
+    };
+
+    SignaturePad.prototype._strokeEnd = function(event) {
+        var canDrawCurve = this.points.length > 2,
+            point = this.points[0];
+
+        if (!canDrawCurve && point) {
+            this._strokeDraw(point);
+        }
+        if (typeof this.onEnd === 'function') {
+            this.onEnd(event);
+        }
+    };
+
+    SignaturePad.prototype._handleMouseEvents = function() {
+        this._mouseButtonDown = false;
+
+        this._canvas.addEventListener("mousedown", this._handleMouseDown);
+        this._canvas.addEventListener("mousemove", this._handleMouseMove);
+        document.addEventListener("mouseup", this._handleMouseUp);
+    };
+
+    SignaturePad.prototype._handleTouchEvents = function() {
+        // Pass touch events to canvas element on mobile IE11 and Edge.
+        this._canvas.style.msTouchAction = 'none';
+        this._canvas.style.touchAction = 'none';
+
+        this._canvas.addEventListener("touchstart", this._handleTouchStart);
+        this._canvas.addEventListener("touchmove", this._handleTouchMove);
+        this._canvas.addEventListener("touchend", this._handleTouchEnd);
+    };
+
+    SignaturePad.prototype.on = function() {
+        this._handleMouseEvents();
+        this._handleTouchEvents();
+    };
+
+    SignaturePad.prototype.off = function() {
+        this._canvas.removeEventListener("mousedown", this._handleMouseDown);
+        this._canvas.removeEventListener("mousemove", this._handleMouseMove);
+        document.removeEventListener("mouseup", this._handleMouseUp);
+
+        this._canvas.removeEventListener("touchstart", this._handleTouchStart);
+        this._canvas.removeEventListener("touchmove", this._handleTouchMove);
+        this._canvas.removeEventListener("touchend", this._handleTouchEnd);
+    };
+
+    SignaturePad.prototype.isEmpty = function() {
+        return this._isEmpty;
+    };
+
+    SignaturePad.prototype._reset = function() {
+        this.points = [];
+        this._lastVelocity = 0;
+        this._lastWidth = (this.minWidth + this.maxWidth) / 2;
+        this._isEmpty = true;
+        this._ctx.fillStyle = this.penColor;
+    };
+
+    SignaturePad.prototype._createPoint = function(event) {
+        var rect = this._canvas.getBoundingClientRect();
+        return new Point(
+            event.clientX - rect.left,
+            event.clientY - rect.top
+        );
+    };
+
+    SignaturePad.prototype._addPoint = function(point) {
+        var points = this.points,
+            c2, c3,
+            curve, tmp;
+
+        points.push(point);
+
+        if (points.length > 2) {
+            // To reduce the initial lag make it work with 3 points
+            // by copying the first point to the beginning.
+            if (points.length === 3) points.unshift(points[0]);
+
+            tmp = this._calculateCurveControlPoints(points[0], points[1], points[2]);
+            c2 = tmp.c2;
+            tmp = this._calculateCurveControlPoints(points[1], points[2], points[3]);
+            c3 = tmp.c1;
+            curve = new Bezier(points[1], c2, c3, points[2]);
+            this._addCurve(curve);
+
+            // Remove the first element from the list,
+            // so that we always have no more than 4 points in points array.
+            points.shift();
+        }
+    };
+
+    SignaturePad.prototype._calculateCurveControlPoints = function(s1, s2, s3) {
+        var dx1 = s1.x - s2.x,
+            dy1 = s1.y - s2.y,
+            dx2 = s2.x - s3.x,
+            dy2 = s2.y - s3.y,
+
+            m1 = {
+                x: (s1.x + s2.x) / 2.0,
+                y: (s1.y + s2.y) / 2.0
+            },
+            m2 = {
+                x: (s2.x + s3.x) / 2.0,
+                y: (s2.y + s3.y) / 2.0
+            },
+
+            l1 = Math.sqrt(1.0 * dx1 * dx1 + dy1 * dy1),
+            l2 = Math.sqrt(1.0 * dx2 * dx2 + dy2 * dy2),
+
+            dxm = (m1.x - m2.x),
+            dym = (m1.y - m2.y),
+
+            k = l2 / (l1 + l2),
+            cm = {
+                x: m2.x + dxm * k,
+                y: m2.y + dym * k
+            },
+
+            tx = s2.x - cm.x,
+            ty = s2.y - cm.y;
+
+        return {
+            c1: new Point(m1.x + tx, m1.y + ty),
+            c2: new Point(m2.x + tx, m2.y + ty)
+        };
+    };
+
+    SignaturePad.prototype._addCurve = function(curve) {
+        var startPoint = curve.startPoint,
+            endPoint = curve.endPoint,
+            velocity, newWidth;
+
+        velocity = endPoint.velocityFrom(startPoint);
+        velocity = this.velocityFilterWeight * velocity +
+            (1 - this.velocityFilterWeight) * this._lastVelocity;
+
+        newWidth = this._strokeWidth(velocity);
+        this._drawCurve(curve, this._lastWidth, newWidth);
+
+        this._lastVelocity = velocity;
+        this._lastWidth = newWidth;
+    };
+
+    SignaturePad.prototype._drawPoint = function(x, y, size) {
+        var ctx = this._ctx;
+
+        ctx.moveTo(x, y);
+        ctx.arc(x, y, size, 0, 2 * Math.PI, false);
+        this._isEmpty = false;
+    };
+
+    SignaturePad.prototype._drawMark = function(x, y, size) {
+        var ctx = this._ctx;
+
+        ctx.save();
+        ctx.moveTo(x, y);
+        ctx.arc(x, y, size, 0, 2 * Math.PI, false);
+        ctx.fillStyle = 'rgba(255, 0, 0, 0.2)';
+        ctx.fill();
+        ctx.restore();
+    };
+
+    SignaturePad.prototype._drawCurve = function(curve, startWidth, endWidth) {
+        var ctx = this._ctx,
+            widthDelta = endWidth - startWidth,
+            drawSteps, width, i, t, tt, ttt, u, uu, uuu, x, y;
+
+        drawSteps = Math.floor(curve.length());
+        ctx.beginPath();
+        for (i = 0; i < drawSteps; i++) {
+            // Calculate the Bezier (x, y) coordinate for this step.
+            t = i / drawSteps;
+            tt = t * t;
+            ttt = tt * t;
+            u = 1 - t;
+            uu = u * u;
+            uuu = uu * u;
+
+            x = uuu * curve.startPoint.x;
+            x += 3 * uu * t * curve.control1.x;
+            x += 3 * u * tt * curve.control2.x;
+            x += ttt * curve.endPoint.x;
+
+            y = uuu * curve.startPoint.y;
+            y += 3 * uu * t * curve.control1.y;
+            y += 3 * u * tt * curve.control2.y;
+            y += ttt * curve.endPoint.y;
+
+            width = startWidth + ttt * widthDelta;
+            this._drawPoint(x, y, width);
+        }
+        ctx.closePath();
+        ctx.fill();
+    };
+
+    SignaturePad.prototype._strokeWidth = function(velocity) {
+        return Math.max(this.maxWidth / (velocity + 1), this.minWidth);
+    };
+
+    var Point = function(x, y, time) {
+        this.x = x;
+        this.y = y;
+        this.time = time || new Date().getTime();
+    };
+
+    Point.prototype.velocityFrom = function(start) {
+        return (this.time !== start.time) ? this.distanceTo(start) / (this.time - start.time) : 1;
+    };
+
+    Point.prototype.distanceTo = function(start) {
+        return Math.sqrt(Math.pow(this.x - start.x, 2) + Math.pow(this.y - start.y, 2));
+    };
+
+    var Bezier = function(startPoint, control1, control2, endPoint) {
+        this.startPoint = startPoint;
+        this.control1 = control1;
+        this.control2 = control2;
+        this.endPoint = endPoint;
+    };
+
+    // Returns approximated length.
+    Bezier.prototype.length = function() {
+        var steps = 10,
+            length = 0,
+            i, t, cx, cy, px, py, xdiff, ydiff;
+
+        for (i = 0; i <= steps; i++) {
+            t = i / steps;
+            cx = this._point(t, this.startPoint.x, this.control1.x, this.control2.x, this.endPoint.x);
+            cy = this._point(t, this.startPoint.y, this.control1.y, this.control2.y, this.endPoint.y);
+            if (i > 0) {
+                xdiff = cx - px;
+                ydiff = cy - py;
+                length += Math.sqrt(xdiff * xdiff + ydiff * ydiff);
+            }
+            px = cx;
+            py = cy;
+        }
+        return length;
+    };
+
+    Bezier.prototype._point = function(t, start, c1, c2, end) {
+        return start * (1.0 - t) * (1.0 - t) * (1.0 - t) +
+            3.0 * c1 * (1.0 - t) * (1.0 - t) * t +
+            3.0 * c2 * (1.0 - t) * t * t +
+            end * t * t * t;
+    };
+
+    return SignaturePad;
+})(document);
+
+var signaturePad = new SignaturePad(document.getElementById('signature-pad'), {
+    backgroundColor: 'rgba(255, 255, 255, 0)',
+    penColor: 'rgb(0, 0, 0)',
+    velocityFilterWeight: .7,
+    minWidth: 0.5,
+    maxWidth: 2.5,
+    throttle: 16, // max x milli seconds on event update, OBS! this introduces lag for event update
+    minPointDistance: 3,
+});
+var saveButton = document.getElementById('save'),
+    clearButton = document.getElementById('clear'),
+    showPointsToggle = document.getElementById('showPointsToggle');
+
+saveButton.addEventListener('click', function(event) {
+    var data = signaturePad.toDataURL('image/png');
+    window.open(data);
+});
+clearButton.addEventListener('click', function(event) {
+    signaturePad.clear();
+});
+showPointsToggle.addEventListener('click', function(event) {
+    signaturePad.showPointsToggle();
+    showPointsToggle.classList.toggle('toggle');
+});
+</script>
+</html>

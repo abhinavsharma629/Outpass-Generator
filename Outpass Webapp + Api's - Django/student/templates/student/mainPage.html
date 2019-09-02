@@ -1,0 +1,1118 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="mdc-typography">
+
+  <head>
+    <title>Hello User</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    <link href="{% static 'css/signature.css' %}">
+
+    <style>
+      /* A4 Outpass Page */
+
+      body {
+        background: rgb(204, 204, 204);
+      }
+
+      page {
+        background: white;
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 0.5cm;
+        box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+      }
+
+      page[size="A4"] {
+        width: 21.5cm;
+        margin: auto;
+        size: A4;
+      }
+
+      /* { */
+
+      /*
+      }
+
+      page[size="A4"] {
+        min-width: 21cm;
+        min-height: 29.7cm;
+        width: auto;
+        height: auto;
+        margin: auto;
+        size: A4;
+      }
+ */
+
+      @media print {
+        body,
+        page {
+          margin: 0;
+          box-shadow: 0;
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      .row::after {
+        content: "";
+        clear: both;
+        display: table;
+      }
+
+      pre {
+        white-space: pre-line;
+        /* css-3 */
+        white-space: -moz-pre-wrap;
+        /* Mozilla, since 1999 */
+        white-space: -pre-wrap;
+        /* Opera 4-6 */
+        white-space: -o-pre-wrap;
+        /* Opera 7 */
+        word-wrap: break-word;
+        /* Internet Explorer 5.5+ */
+        text-align: justify;
+      }
+
+      p {
+        white-space: pre-line;
+        /* css-3 */
+        white-space: -moz-pre-wrap;
+        /* Mozilla, since 1999 */
+        white-space: -pre-wrap;
+        /* Opera 4-6 */
+        white-space: -o-pre-wrap;
+        /* Opera 7 */
+        word-wrap: break-word;
+        /* Internet Explorer 5.5+ */
+        text-align: justify;
+      }
+
+      /* File Uploader */
+
+      @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css);
+      @import url("https://fonts.googleapis.com/css?family=Roboto");
+      h2 {
+        font-family: "Roboto", sans-serif;
+        font-size: 26px;
+        line-height: 1;
+        color: #454cad;
+        margin-bottom: 0;
+      }
+
+      .p1 {
+        font-family: "Roboto", sans-serif;
+        font-size: 18px;
+        color: #5f6982;
+      }
+
+      .uploader {
+        display: block;
+        clear: both;
+        margin: 0 auto;
+        width: 100%;
+        max-width: 600px;
+      }
+
+      .uploader label {
+        float: left;
+        clear: both;
+        width: 100%;
+        padding: 2rem 1.5rem;
+        text-align: center;
+        background: #fff;
+        border-radius: 7px;
+        border: 3px solid #eee;
+        transition: all .2s ease;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      .uploader label:hover {
+        border-color: #454cad;
+      }
+
+      .uploader label.hover {
+        border: 3px solid #454cad;
+        box-shadow: inset 0 0 0 6px #eee;
+      }
+
+      .uploader label.hover #start i.fa {
+        -webkit-transform: scale(0.8);
+        transform: scale(0.8);
+        opacity: 0.3;
+      }
+
+      .uploader #start {
+        float: left;
+        clear: both;
+        width: 100%;
+      }
+
+      .uploader #start.hidden {
+        display: none;
+      }
+
+      .uploader #start i.fa {
+        font-size: 50px;
+        margin-bottom: 1rem;
+        transition: all .2s ease-in-out;
+      }
+
+      .uploader #response {
+        float: left;
+        clear: both;
+        width: 100%;
+      }
+
+      .uploader #response.hidden {
+        display: none;
+      }
+
+      .uploader #response #messages {
+        margin-bottom: .5rem;
+      }
+
+      .uploader #file-image {
+        display: inline;
+        margin: 0 auto .5rem auto;
+        width: auto;
+        height: auto;
+        max-width: 180px;
+      }
+
+      .uploader #file-image.hidden {
+        display: none;
+      }
+
+      .uploader #notimage {
+        display: block;
+        float: left;
+        clear: both;
+        width: 100%;
+      }
+
+      .uploader #notimage.hidden {
+        display: none;
+      }
+
+      .uploader progress,
+      .uploader .progress {
+        display: inline;
+        clear: both;
+        margin: 0 auto;
+        width: 100%;
+        max-width: 180px;
+        height: 8px;
+        border: 0;
+        border-radius: 4px;
+        background-color: #eee;
+        overflow: hidden;
+      }
+
+      .uploader .progress[value]::-webkit-progress-bar {
+        border-radius: 4px;
+        background-color: #eee;
+      }
+
+      .uploader .progress[value]::-webkit-progress-value {
+        background: linear-gradient(to right, #393f90 0%, #454cad 50%);
+        border-radius: 4px;
+      }
+
+      .uploader .progress[value]::-moz-progress-bar {
+        background: linear-gradient(to right, #393f90 0%, #454cad 50%);
+        border-radius: 4px;
+      }
+
+      .uploader input[type="file"] {
+        display: none;
+      }
+
+      .uploader div {
+        margin: 0 0 .5rem 0;
+        color: #5f6982;
+      }
+
+      .uploader .btn {
+        display: inline-block;
+        margin: .5rem .5rem 1rem .5rem;
+        clear: both;
+        font-family: inherit;
+        font-weight: 700;
+        font-size: 14px;
+        text-decoration: none;
+        text-transform: initial;
+        border: none;
+        border-radius: .2rem;
+        outline: none;
+        padding: 0 1rem;
+        height: 36px;
+        line-height: 36px;
+        color: #fff;
+        transition: all 0.2s ease-in-out;
+        box-sizing: border-box;
+        background: #454cad;
+        border-color: #454cad;
+        cursor: pointer;
+      }
+
+      @import url("https://fonts.googleapis.com/css?family=Roboto:400,400i,700");
+      .card {
+        background: #fff;
+        border-radius: 5px;
+        margin-left: 5%;
+        box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.5);
+        max-width: 90%;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        padding: 1.5rem 1.5rem 1.5rem 7rem;
+      }
+
+      .card h2 {
+        margin: 0;
+        margin-left: 5%;
+        padding: 0;
+      }
+
+      .card .title {
+        padding: 0.25rem 0;
+        margin-left: 5%;
+        border-bottom: 2px solid #dddfee;
+      }
+
+      .card .desc {
+        padding: 0.5rem 0;
+        margin-left: 5%;
+        order: 99;
+      }
+
+      .card .actions {
+        order: 100;
+        margin-left: 5%;
+        padding: 0.5rem 0;
+      }
+
+      .card .profile-img {
+        width: 150px;
+        height: 150px;
+        margin: 0 auto;
+        background: #f00;
+        position: absolute;
+        left: -30px;
+        border-radius: 100px;
+        border: 5px solid #fff;
+        transition: all 0.3s ease-in-out;
+      }
+
+      .card .profile-img::after {
+        width: 150px;
+        height: 150px;
+        background: #f00;
+        position: absolute;
+        left: 0px;
+        top: -5px;
+        border-radius: 100px;
+        border: 5px solid #fff;
+        content: '';
+        z-index: -1;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+      }
+
+      .card .profile-img:hover {
+        left: -85px;
+      }
+
+      .card button {
+        font-family: Roboto, sans-serif;
+        border: none;
+        background-color: transparent;
+        font-size: 16px;
+        padding: 0 5px 0;
+        cursor: pointer;
+      }
+
+      .card button:hover {
+        color: #f00;
+      }
+
+      .card button#close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+      }
+
+      .card button#close1 {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+      }
+
+      .fas.fa-heart {
+        color: #f00;
+      }
+
+      @import url(https://fonts.googleapis.com/icon?family=Material+Icons);
+      @import url('https://fonts.googleapis.com/css?family=Raleway');
+      // variables
+      $base-color: cadetblue;
+      $base-font: 'Raleway',
+      sans-serif;
+      h1 {
+        font-family: inherit;
+        margin: 0 0 .75em 0;
+        color: desaturate($base-color, 15%);
+        text-align: center;
+      }
+
+      .box {
+        display: block;
+        min-width: 300px;
+        height: 300px;
+        margin: 10px;
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+        transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+        overflow: hidden;
+      }
+
+      .upload-options {
+        position: relative;
+        height: 75px;
+        background-color: $base-color;
+        cursor: pointer;
+        overflow: hidden;
+        text-align: center;
+        transition: background-color ease-in-out 150ms;
+        &:hover {
+          background-color: lighten($base-color, 10%);
+        }
+        & input {
+          width: 0.1px;
+          height: 0.1px;
+          opacity: 0;
+          overflow: hidden;
+          position: absolute;
+          z-index: -1;
+        }
+        & label {
+          display: flex;
+          align-items: center;
+          width: 100%;
+          height: 100%;
+          font-weight: 400;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          cursor: pointer;
+          overflow: hidden;
+          &::after {
+            content: 'add';
+            font-family: 'Material Icons';
+            position: absolute;
+            font-size: 2.5rem;
+            color: rgba(230, 230, 230, 1);
+            top: calc(50% - 2.5rem);
+            left: calc(50% - 1.25rem);
+            z-index: 0;
+          }
+          & span {
+            display: inline-block;
+            width: 50%;
+            height: 100%;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            vertical-align: middle;
+            text-align: center;
+            &:hover i.material-icons {
+              color: lightgray;
+            }
+          }
+        }
+      }
+
+      .js--image-preview {
+        height: 225px;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        background-image: url('');
+        background-color: white;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        &::after {
+          content: "photo_size_select_actual";
+          font-family: 'Material Icons';
+          position: relative;
+          font-size: 4.5em;
+          color: rgba(230, 230, 230, 1);
+          top: calc(50% - 3rem);
+          left: calc(50% - 2.25rem);
+          z-index: 0;
+        }
+        &.js--no-default::after {
+          display: none;
+        }
+        &:nth-child(2) {
+          background-image: url('http://bastianandre.at/giphy.gif');
+        }
+      }
+
+      /* i.material-icons {
+        transition: color 100ms ease-in-out;
+        font-size: 2.25em;
+        line-height: 55px;
+        color: white;
+        display: block;
+      } */
+
+      .drop {
+        display: block;
+        position: absolute;
+        background: transparentize($base-color, .8);
+        border-radius: 100%;
+        transform: scale(0);
+      }
+
+      .animate {
+        animation: ripple 0.4s linear;
+      }
+
+      @keyframes ripple {
+        100% {
+          opacity: 0;
+          transform: scale(2.5);
+        }
+      }
+
+      .view11 {
+        pointer-events: none;
+        /*Button disabled - CSS color class*/
+        color: #ff0000;
+      }
+
+      /* Pdf Css */
+
+      /*Stuff neccesary to make PDF viewer work*/
+
+      .myPdfModal {
+        width: 815px;
+        margin: auto;
+      }
+
+      .page11 {
+        background-color: white;
+        box-shadow: 0 1px 2px 3px #A6A6A6;
+        height: auto;
+        box-sizing: border-box;
+        padding: 1px 0;
+        margin: 5px 0 12px;
+        page-break-after: always;
+        page-break-inside: avoid;
+        position: relative;
+      }
+
+      @media print {
+        .page11 {
+          box-shadow: none;
+          margin: 0;
+        }
+      }
+
+      /* Qr Code */
+      /* #qrcode {
+        width:160px;
+        height:160px;
+        margin-top:15px;
+      } */
+
+
+    </style>
+  </head>
+
+  <body>
+
+
+
+{% include 'student/navbar.html' %}
+
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">ScreenShot</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <p class="lead p1">
+              <b>Upload Your Whatsapp ScreenShot Here</b>
+            </p>
+            <!-- Upload  -->
+            <form id="file-upload-form" class="uploader">
+              <input id="file-upload" type="file" name="fileUpload" accept="image/*" />
+
+              <label for="file-upload" id="file-drag">
+                <img id="file-image" src="#" alt="Preview" class="hidden">
+                <div id="start">
+                  <i class="fa fa-download" aria-hidden="true"></i>
+                  <div>Select a file or drag here</div>
+                  <div id="notimage" class="hidden">Please select an image</div>
+                  <span id="file-upload-btn" class="btn btn-primary">Select a file</span>
+                </div>
+                <div id="response" class="hidden">
+                  <div id="messages"></div>
+                  <progress class="progress" id="file-progress" value="0">
+                    <span>0</span>%
+                  </progress>
+                </div>
+              </label>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Outpass View Modal -->
+
+    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModal2Label" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModal2Label">Outpass Details</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+
+            <div class="form-group">
+              <label for="message-text" class="col-form-label">Purpose Of Leave</label>
+              <textarea class="form-control" id="purposeOfLeave" readonly></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="message-text" class="col-form-label">Number Of Days</label>
+              <input type="number" class="form-control" id="num_of_days1111">
+            </div>
+
+
+            <div class="form-group">
+              <label for="message-text" class="col-form-label">From</label>
+              <input type="date" class="form-control" id="fromDate" readonly>
+            </div>
+            <div class="form-group">
+              <label for="message-text" class="col-form-label">To</label>
+              <input type="date" class="form-control" id="toDate" readonly>
+            </div>
+
+            <div class="form-group">
+              <label for="message-text" class="col-form-label">Address While Leave</label>
+              <textarea class="form-control" id="addressWhileLeave" readonly></textarea>
+            </div>
+
+            <div class="form-group">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="isEmergency">
+                <label class="form-check-label" for="isEmergency">
+                  Is An Emergency !!
+                </label>
+              </div>
+            </div>
+            <div class="box">
+              <div class="js--image-preview" id="preview111"></div>
+              <div class="upload-options">
+                <label>
+                  <input type="file" class="image-upload" accept="image/*" hidden/>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Outpass Edit Modal -->
+
+
+    <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModal3Label" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModal3Label">Outpass Details</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+
+            <div class="form-group">
+              <label for="message-text" class="col-form-label">Purpose Of Leave</label>
+              <textarea class="form-control" id="purposeOfLeave1"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="message-text" class="col-form-label">Number Of Days</label>
+              <input type="number" class="form-control" id="num_of_days1">
+            </div>
+
+            <div class="form-group">
+              <label for="message-text" class="col-form-label">From</label>
+              <input type="date" class="form-control" id="fromDate1">
+            </div>
+            <div class="form-group">
+              <label for="message-text" class="col-form-label">To</label>
+              <input type="date" class="form-control" id="toDate1">
+            </div>
+
+            <div class="form-group">
+              <label for="message-text" class="col-form-label">Address While Leave</label>
+              <textarea class="form-control" id="addressWhileLeave1"></textarea>
+            </div>
+
+            <div class="form-group">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="isEmergency1">
+                <label class="form-check-label" for="isEmergency">
+                  Is An Emergency !!
+                </label>
+              </div>
+            </div>
+
+            <div class="box">
+              <div class="js--image-preview" id="preview11"></div>
+              <div class="upload-options">
+                <label>
+                  <input type="file" class="image-upload" accept="image/*" id="upload-screenshot" />
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="edit-save" class="btn btn-secondary" data-dismiss="modal">Save</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close-file1">Close</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Pdf View Modal -->
+    <div class="modal fade bd-example-modal-lg myPdfModal" id="myPdfModal" tabindex="-1" role="dialog" aria-labelledby="myPdfModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="myPdfModalLabel">Outpass</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body page11" id="full">
+
+          </div>
+          <!-- <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div> -->
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Qr Code -->
+    <!-- Pdf View Modal -->
+    <div class="modal fade bd-example-modal-sm" id="qr-coModal" tabindex="-1" role="dialog" aria-labelledby="qr-coModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="qr-coModalLabel">Your Unique QR Code</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="qrcode">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <input id="hid_inp" hidden type="text" />
+
+  </body>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+  <!-- Access Token -->
+  <script>
+    var access_token = "{{access_token}}"
+    var refresh_token = "{{refresh_token}}"
+    var file, file1;
+    $(function() {
+
+      setInterval(function(){$.ajax({
+        url: "http://127.0.0.1:8000/student/acceptedOutpassNotifications1",
+        type: "GET",
+        headers: {
+          Authorization: "Bearer " + access_token
+        },
+        success: function(data) {
+          var approved_outpasses = JSON.parse(data.accepted_outpasses);
+          console.log($("#num_of_noti"))
+          $("#num_of_noti").html(approved_outpasses.length)
+        }
+      })},2000);
+
+      $("#file-upload").change(function(e) {
+
+        file = e.target.files[0];
+        var reader = new FileReader();
+        reader.onload = function(event) {
+          file = event.target.result;
+        }
+      });
+
+      $("#close-file1").click(function(){
+        file1=undefined;
+      })
+
+
+
+      $("#upload-screenshot").change(function(e) {
+
+        file1 = e.target.files[0];
+        var reader = new FileReader();
+        reader.onload = function(event) {
+          file1 = event.target.result;
+        }
+      })
+
+    })
+
+    //console.log(access_token+" "+refresh_token)
+  </script>
+  <!-- Signature -->
+  <script src="{% static 'js/signature.js' %}"></script>
+
+  <!-- Main Controller -->
+  <script src="{% static 'js/mainController.js' %}"></script>
+
+  <!-- File Uploader -->
+  <script src="{% static 'js/fileUploader.js' %}"></script>
+
+  <!-- Outpass -->
+  <script src="{% static 'js/outpass.js' %}"></script>
+
+  <!-- Pdf Generator -->
+  <script src="{% static 'js/generatePdf.js' %}"></script>
+
+  <!-- Update -->
+  <script src="{% static 'js/update.js' %}"></script>
+
+  <!-- Profile -->
+  <script src="{% static 'js/profile.js' %}"></script>
+
+  <!-- Drafts -->
+  <script src="{% static 'js/drafts.js' %}"></script>
+
+  <!-- History -->
+  <script src="{% static 'js/history.js' %}"></script>
+
+  <!-- QR Code Generator -->
+  <script src="{% static 'js/QRCodeGenerator.js' %}"></script>
+
+  <!-- Notifications -->
+  <script src="{% static 'js/notifications.js' %}"></script>
+
+
+
+  <script>
+    $(function() {
+
+      profile();
+      update();
+
+
+      function initImageUpload(box) {
+        let uploadField = box.querySelector('.image-upload');
+
+        uploadField.addEventListener('change', getFile);
+
+        function getFile(e) {
+          let file = e.currentTarget.files[0];
+          var reader = new FileReader();
+          reader.onload = function(event) {
+            file1 = event.target.result;
+          }
+          checkType(file);
+        }
+
+        function previewImage(file) {
+          let thumb = box.querySelector('.js--image-preview'),
+            reader = new FileReader();
+
+          reader.onload = function() {
+            thumb.style.backgroundImage = 'url(' + reader.result + ')';
+          }
+          reader.readAsDataURL(file);
+
+          thumb.className += ' js--no-default';
+        }
+
+        function checkType(file) {
+          let imageType = /image.*/;
+          if (!file.type.match(imageType)) {
+            throw 'Datei ist kein Bild';
+          } else if (!file) {
+            throw 'Kein Bild gewählt';
+          } else {
+            previewImage(file);
+          }
+        }
+
+      }
+
+      // initialize box-scope
+      var boxes = document.querySelectorAll('.box');
+
+      for (let i = 0; i < boxes.length; i++) {
+        let box = boxes[i];
+        initDropEffect(box);
+        initImageUpload(box);
+      }
+
+
+
+      /// drop-effect
+      function initDropEffect(box) {
+        let area, drop, areaWidth, areaHeight, maxDistance, dropWidth, dropHeight, x, y;
+
+        // get clickable area for drop effect
+        area = box.querySelector('.js--image-preview');
+        area.addEventListener('click', fireRipple);
+
+        function fireRipple(e) {
+          area = e.currentTarget
+          // create drop
+          if (!drop) {
+            drop = document.createElement('span');
+            drop.className = 'drop';
+            this.appendChild(drop);
+          }
+          // reset animate class
+          drop.className = 'drop';
+
+          // calculate dimensions of area (longest side)
+          areaWidth = getComputedStyle(this, null).getPropertyValue("width");
+          areaHeight = getComputedStyle(this, null).getPropertyValue("height");
+          maxDistance = Math.max(parseInt(areaWidth, 10), parseInt(areaHeight, 10));
+
+          // set drop dimensions to fill area
+          drop.style.width = maxDistance + 'px';
+          drop.style.height = maxDistance + 'px';
+
+          // calculate dimensions of drop
+          dropWidth = getComputedStyle(this, null).getPropertyValue("width");
+          dropHeight = getComputedStyle(this, null).getPropertyValue("height");
+
+          // calculate relative coordinates of click
+          // logic: click coordinates relative to page - parent's position relative to page - half of self height/width to make it controllable from the center
+          x = e.pageX - this.offsetLeft - (parseInt(dropWidth, 10) / 2);
+          y = e.pageY - this.offsetTop - (parseInt(dropHeight, 10) / 2) - 30;
+
+          // position drop and animate
+          drop.style.top = y + 'px';
+          drop.style.left = x + 'px';
+          drop.className += ' animate';
+          e.stopPropagation();
+
+        }
+      }
+
+
+
+
+      $.fn.html2canvas = function(options) {
+        var date = new Date(),
+          $message = null,
+          timeoutTimer = false,
+          timer = date.getTime();
+        html2canvas.logging = options && options.logging;
+        html2canvas.Preload(this[0], $.extend({
+          complete: function(images) {
+            var queue = html2canvas.Parse(this[0], images, options),
+              $canvas = $(html2canvas.Renderer(queue, options)),
+              finishTime = new Date();
+
+            $canvas.css({
+              position: 'absolute',
+              left: 0,
+              top: 0
+            }).appendTo(document.body);
+            $canvas.siblings().toggle();
+
+            $(window).click(function() {
+              if (!$canvas.is(':visible')) {
+                $canvas.toggle().siblings().toggle();
+                throwMessage("Canvas Render visible");
+              } else {
+                $canvas.siblings().toggle();
+                $canvas.toggle();
+                throwMessage("Canvas Render hidden");
+              }
+            });
+            throwMessage('Screenshot created in ' + ((finishTime.getTime() - timer) / 1000) + " seconds<br />", 4000);
+          }
+        }, options));
+
+        function throwMessage(msg, duration) {
+          window.clearTimeout(timeoutTimer);
+          timeoutTimer = window.setTimeout(function() {
+            $message.fadeOut(function() {
+              $message.remove();
+            });
+          }, duration || 2000);
+          if ($message)
+            $message.remove();
+          $message = $('<div ></div>').html(msg).css({
+            margin: 0,
+            padding: 10,
+            background: "#000",
+            opacity: 0.7,
+            position: "fixed",
+            top: 10,
+            right: 10,
+            fontFamily: 'Tahoma',
+            color: '#fff',
+            fontSize: 12,
+            borderRadius: 12,
+            width: 'auto',
+            height: 'auto',
+            textAlign: 'center',
+            textDecoration: 'none'
+          }).hide().fadeIn().appendTo('body');
+        }
+      };
+
+
+
+    })
+
+    function createPdf() {
+      var pdf = new jsPDF('portrait', 'pt', 'a4');
+      source = $('#myoutpass1');
+      console.log(source);
+
+      margins = {
+        top: 5,
+        bottom: 5,
+        left: 10,
+        width: 842
+      };
+
+      pdf.fromHTML(
+        source.html(), // HTML string or DOM elem ref.
+        margins.left, // x coord
+        margins.top, { // y coord
+          'width': margins.width // max width of content on PDF
+          // 'elementHandlers': specialElementHandlers
+        },
+
+        function(dispose) {
+          // dispose: object with X, Y of the last line add to the PDF
+          //          this allow the insertion of new lines after html
+          pdf.save('Test.pdf');
+        }, margins
+      );
+    }
+
+
+    // Set Student Details
+    function send(dataURL) {
+      console.log($("#er_no").val())
+      console.log($("#bed_no").val())
+      console.log($("#room_no").val())
+      console.log($("#year").val())
+      console.log($("#branch").val())
+      console.log($("#parent").val())
+      console.log($("#warden").val())
+      console.log($("#college").val())
+      console.log(dataURL)
+
+      $.ajax({
+        "type": 'POST',
+        "url": "http://127.0.0.1:8000/student/saveStudentDetails/",
+        "headers": {
+          "Authorization": "Bearer " + access_token
+        },
+        "data": {
+          'er_no': $("#er_no").val(),
+          'signature': dataURL,
+          'bed_no': $("#bed_no").val(),
+          'hostel': $("#hostel").val(),
+          'room_no': $("#room_no").val(),
+          'year': $("#year").val(),
+          'sem': $("#sem1").val(),
+          'branch': $("#branch").val(),
+          'parent': $("#parent").val(),
+          'parent_contact': $("#parent_contact").val(),
+          'warden': $("#warden").val(),
+          'college': $("#college").val()
+        },
+        "dataType": 'json',
+        success: function(data) {
+          console.log(data);
+          if(data.status==="404"){
+            alert("Warden Is Registered For Different Year!!")
+          }
+          else if(data.status==="200"){
+          alert("Your Details Have Been Saved Successfully!!");
+          $("#createOutpass1").html("");
+        }
+        else{
+            alert("Error!! Please Try Again With Proper And Valid Details!!")
+        }
+        }
+      });
+    }
+  </script>
+
+</html>

@@ -1,0 +1,220 @@
+{% load static %}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<html lang="en" class="mdc-typography">
+
+  <head>
+    <title>Your Outpass</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
+
+    <link href="{% static 'css/signature.css' %}">
+
+    <style>
+      /* A4 Outpass Page */
+
+      body {
+        background: rgb(204, 204, 204);
+      }
+
+      page {
+        background: white;
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 0.5cm;
+        box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+      }
+
+      page[size="A4"] {
+        width: 21.5cm;
+        margin: auto;
+        size: A4;
+      }
+
+      @media print {
+        body,
+        page {
+          margin: 0;
+          box-shadow: 0;
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      .row::after {
+        content: "";
+        clear: both;
+        display: table;
+      }
+
+      pre {
+        white-space: pre-line;
+        /* css-3 */
+        white-space: -moz-pre-wrap;
+        /* Mozilla, since 1999 */
+        white-space: -pre-wrap;
+        /* Opera 4-6 */
+        white-space: -o-pre-wrap;
+        /* Opera 7 */
+        word-wrap: break-word;
+        /* Internet Explorer 5.5+ */
+        text-align: justify;
+      }
+
+      p {
+        white-space: pre-line;
+        /* css-3 */
+        white-space: -moz-pre-wrap;
+        /* Mozilla, since 1999 */
+        white-space: -pre-wrap;
+        /* Opera 4-6 */
+        white-space: -o-pre-wrap;
+        /* Opera 7 */
+        word-wrap: break-word;
+        /* Internet Explorer 5.5+ */
+        text-align: justify;
+      }
+    </style>
+  </head>
+
+  <body>
+    <page size="A4" id="outpass11" class="col-12 col-s-12">
+
+      <div class="row col-s-12">
+
+        <div class="col-md-9 col-s-10" style="margin-top:2%; margin-left:2%;">
+          &emsp;
+          <b>
+            <h5>{{college_fullName}}</h5>
+          </b>
+          <b>
+            <i>
+              <h6 style="text-align-last: center;">{{college_location}}</h6>
+            </i>
+          </b>
+          <b>
+            <i>
+              <h6 style="text-align-last: center;">{{college_pincode}} , {{college_country}}</h6>
+            </i>
+          </b>
+        </div>
+      </div>
+      <br>
+      <br>
+
+      <div class="row col-s-12">
+        <div class="col-md-5 col-s-5">
+          <pre style="float: left; margin-left:1%;">
+            <b><i>Name:</i></b><b><u>{{student_fullName}}</u></b><u>({{student_er_no}})</u>
+            <b><i>Branch:</i></b> <u><b>{{student_branch}}</b></u>
+            <b><i>Year:</i></b> <u><b>{{student_year}}</b></u>
+            <b><i>Semester:</i></b> <u><b>{{student_semester}}</b></u>
+            <b><i>Hostel:</i></b> <u><b>{{student_hostel}}</b></u>
+            <b><i>Room No:</i></b>  <u><b>{{student_room}}</b></u>
+            <b><i>Bed No:</i></b>  <u><b>{{student_bed}}</b></u>
+          </pre>
+        </div>
+
+        <div class="col-md-7 col-s-7">
+          <pre style="float: right; margin-left:50%;">
+              <b><i>Mobile:</i></b> <u><b>{{student_phone|slice:"3:"}}</b></u>
+              <b><i>Email:</i></b>  <u><b>{{student_email}}</b></u>
+              <b><i>Parent:</i></b> <u><b>{{student_parent_name}}</b></u>
+              <b><i>Parent / Guardian Mobile Number:</i></b> <u><b>{{student_parent_phone|slice:"3:"}}</b></u>
+          </pre>
+        </div>
+      </div>
+
+      <br>
+
+      <h6 style="margin-left:40%;">
+        <b>APPLICATION</b>
+      </h6>
+
+      <pre style="float: left; margin-left:1%;">
+                   <b><i>To:</i></b>
+                   <b><i>The Warden:</i></b>  <u><b>Mr. {{warden_fullName}}</b></u>
+                   <b><i>Title:</i></b> <u><b>Outpass For Leave</b></u>
+                   </pre>
+
+      <br>
+
+      <pre>I Am Applying For <b><u>{{days}}</u> Days</b> Of Leave <b>From</b> <u><b> {{from}}</b></u> <b>To</b><u><b> {{to}}</b></u> .</pre>
+      <div class="row">
+        &emsp;
+        <pre><b>Purpose For Leave:</b> {{purposeOfLeave}}.</pre>
+      </div>
+      <div class="row">
+        &emsp;
+        <pre><b>Address While On Leave:</b> {{addressWhileLeave}}.</pre>
+      </div>
+      <br>
+      <br>
+      <pre><b>Note:- If In Case The outpass Is For Non-Holiday days</b>
+                       <ul>
+                           <li>I will be responsible for the shortage of my attendance</li>
+                           <li>My parents are aware of the leave.</li>
+                       </ul>
+      </pre>
+
+      <div class="row">
+        <div class="form-group signature-component col-md-6 col-s-12">
+          <section>
+            <p>
+              <b>Warden's Signature</b>
+            </p>
+
+            <canvas id="signature-pad11"></canvas>
+
+          </section>
+        </div>
+
+        <div class="form-group signature-component col-md-6 col-s-12">
+          <section>
+            <p>
+              <b>Student's Signature</b>
+            </p>
+
+            <canvas id="signature-pad12"></canvas>
+
+          </section>
+        </div>
+
+      </div>
+
+    </page>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script>
+      $(function() {
+        var context = document.getElementById("signature-pad11").getContext("2d");
+        var context1 = document.getElementById("signature-pad12").getContext("2d");
+        var image = new Image();
+
+        function drawPattern() {
+
+          context.fillStyle = context.createPattern(image, "repeat");
+          context.fillRect(0, 0, 300, 300);
+        }
+
+        image.src = "{{student_signature}}";
+        image1.src = "{{warden_signature}}";
+        image.onload = drawPattern;
+        image1.onload = drawPattern;
+      })
+    </script>
+  </body>
+
+</html>

@@ -1,0 +1,61 @@
+body {
+  background: rgb(204,204,204);
+}
+page {
+  background: white;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 0.5cm;
+  box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+}
+
+
+page[size="A4"] {
+width: 21.5cm;
+  margin: auto;
+  size:A4;
+}
+
+{% comment %} page[size="A4"] {
+ min-width: 21cm;
+  min-height: 29.7cm;
+  width:auto;
+  height:auto;
+  margin:auto;
+  size:A4;
+} {% endcomment %}
+
+
+
+@media print {
+  body, page {
+    margin: 0;
+    box-shadow: 0;
+  }
+}
+* {
+  box-sizing: border-box;
+}
+
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+pre {
+  white-space: pre-line;     /* css-3 */
+ white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+ white-space: -pre-wrap;      /* Opera 4-6 */
+ white-space: -o-pre-wrap;    /* Opera 7 */
+ word-wrap: break-word;       /* Internet Explorer 5.5+ */
+  text-align: justify;
+}
+
+p {
+  white-space: pre-line;    /* css-3 */
+ white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+ white-space: -pre-wrap;      /* Opera 4-6 */
+ white-space: -o-pre-wrap;    /* Opera 7 */
+ word-wrap: break-word;       /* Internet Explorer 5.5+ */
+  text-align: justify;
+}

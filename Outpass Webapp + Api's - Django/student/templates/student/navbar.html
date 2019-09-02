@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" class="mdc-typography">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ request.user.username}}</title>
+  <link rel='stylesheet' href='https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css'>
+<link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Rubik:300,400,500'>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto+Mono'>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700'>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<style>
+body {
+  margin: 0;
+  display: flex;
+  height: 100vh;
+}
+
+.mdc-drawer-app-content {
+  flex: auto;
+  overflow: auto;
+}
+
+.main-content {
+  overflow: auto;
+  height: 100%;
+  padding: 18px;
+}
+
+.app-bar {
+  position: absolute;
+}
+
+</style>
+</head>
+<body>
+
+<aside class="mdc-drawer mdc-drawer--dismissible">
+  <div class="mdc-drawer__content">
+    <div class="mdc-list">
+      <a class="mdc-list-item mdc-list-item--activated" href="#" aria-selected="true" id="profile">
+        <i class="material-icons mdc-list-item__graphic" aria-hidden="true">face</i>
+        <span class="mdc-list-item__text">Profile</span>
+      </a>
+      <a class="mdc-list-item" href="#" id="outpass">
+        <i class="material-icons mdc-list-item__graphic" aria-hidden="true" >send</i>
+        <span class="mdc-list-item__text">Create Outpass</span>
+
+      </a>
+      <a class="mdc-list-item" href="#" id="drafts">
+        <i class="material-icons mdc-list-item__graphic" aria-hidden="true">drafts</i>
+        <span class="mdc-list-item__text">Drafts</span>
+      </a>
+      <a class="mdc-list-item" href="#" id="history">
+        <i class="material-icons mdc-list-item__graphic" aria-hidden="true" >history</i>
+        <span class="mdc-list-item__text">History</span>
+      </a>
+      <a class="mdc-list-item" href="#" id="notifications">
+        <i class="material-icons mdc-list-item__graphic" aria-hidden="true" >notifications</i>
+
+        <span class="mdc-list-item__text">Notification</span>
+      </a>
+    </div>
+  </div>
+</aside>
+
+<div class="mdc-drawer-app-content">
+  <header class="mdc-top-app-bar app-bar" id="app-bar">
+    <div class="mdc-top-app-bar__row">
+      <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+        <a href="#" class="demo-menu material-icons mdc-top-app-bar__navigation-icon">menu</a>
+        <span class="mdc-top-app-bar__title" style="cursor:pointer;">{{request.user.username}}</span>
+      </section>
+       <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+        <i class="material-icons mdc-list-item__graphic" aria-hidden="true" style="cursor:pointer;" id="notifications-popup">notifications</i>
+        <span class="badge badge-light" style="margin-left:-7%; margin-top:-5%;" id="num_of_noti"></span>
+        <span class="sr-only">unread messages</span>
+      </section>
+
+    </div>
+  </header>
+  {% include 'student/loader.html' %}
+  <div class="blur" id="main1111">
+  <main class="main-content" id="main-content">
+  <br>
+  <br>
+  <br>
+  <div id="profile1"></div>
+  <div id="createOutpass1"></div>
+  <div id="drafts1"></div>
+  <div id="history1"></div>
+  <div id="notifications1"></div>
+  <div id="myoutpass1"></div>
+
+  </main>
+</div>
+</div>
+<!-- partial -->
+  <script src='https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js'></script>
+<script>
+mdc.autoInit();
+
+var drawer = new mdc.drawer.MDCDrawer(document.querySelector('.mdc-drawer'));
+const topAppBar = mdc.topAppBar.MDCTopAppBar.attachTo(document.getElementById('app-bar'));
+topAppBar.setScrollTarget(document.getElementById('main-content'));
+topAppBar.listen('MDCTopAppBar:nav', () => {
+  drawer.open = !drawer.open;
+});
+
+$("#notifications-popup").click(function(){
+  $("#notifications").click()
+})
+</script>
+
+</body>
+</html>
